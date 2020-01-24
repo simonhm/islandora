@@ -48,5 +48,12 @@
       "email": "dlamb@islandora.ca",
       "role": "Maintainer"
     }
-  ]
+  ],
+  "extra": {
+      "patches": {
+          "drupal/features": {
+              "Patch features to work with drush and drupal 8.8.1": "https://www.drupal.org/files/issues/2019-10-30/features-3.8-issue-3091278.patch"
+          }
+      }
+  }
 }
