@@ -8,8 +8,10 @@ use Drupal\Core\Form\FormStateInterface;
 /**
  * Provides a 'Entity Bundle' condition.
  *
+ * Namespaced to avoid conflict with ctools entity_bundle plugin.
+ *
  * @Condition(
- *   id = "entity_bundle",
+ *   id = "islandora_entity_bundle",
  *   label = @Translation("Entity Bundle"),
  *   context_definitions = {
  *     "node" = @ContextDefinition("entity:node", required = FALSE, label = @Translation("Node")),
