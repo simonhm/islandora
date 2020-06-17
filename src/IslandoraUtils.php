@@ -265,7 +265,7 @@ class IslandoraUtils {
   }
 
   /**
-   * Gets the taxonomy term associated with an external uri.
+   * Gets the external uri associated with a taxonomy term.
    *
    * @param \Drupal\taxonomy\TermInterface $term
    *   Taxonomy term.
@@ -302,7 +302,8 @@ class IslandoraUtils {
     $field_map = $this->entityFieldManager->getFieldMap();
     $fields = [];
     foreach ($field_map['taxonomy_term'] as $field_name => $field_data) {
-      if ($field_data['type'] == 'authority_link') {
+      $data_types = ['authority_link', 'field_external_authority_link'];
+      if (in_array($field_data['type'], $data_types)) {
         $fields[] = $field_name;
       }
     }
