@@ -4,6 +4,7 @@ namespace Drupal\islandora_iiif\Plugin\views\style;
 
 use Drupal\views\Plugin\views\style\StylePluginBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\views\ResultRow;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -74,10 +75,17 @@ class IIIFManifest extends StylePluginBase {
    */
   protected $fileSystem;
 
+   /**
+   * The messenger.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface
+   */
+  private $messenger;
+
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, SerializerInterface $serializer, Request $request, ImmutableConfig $iiif_config, FileSystem $file_system, Client $http_client) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, SerializerInterface $serializer, Request $request, ImmutableConfig $iiif_config, FileSystem $file_system, Client $http_client, MessengerInterface $messenger) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
     $this->serializer = $serializer;
@@ -85,6 +93,7 @@ class IIIFManifest extends StylePluginBase {
     $this->iiifConfig = $iiif_config;
     $this->fileSystem = $file_system;
     $this->httpClient = $http_client;
+    $this->messenger = $messenger;
   }
 
   /**
@@ -297,7 +306,7 @@ class IIIFManifest extends StylePluginBase {
 
     // If no fields to choose from, add an error message indicating such.
     if (count($field_options) == 0) {
-      drupal_set_message($this->t('No image or file fields were found in the View.
+      $this->messenger->addMessage($this->t('No image or file fields were found in the View.
         You will need to add a field to this View'), 'error');
     }
 

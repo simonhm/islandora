@@ -5,6 +5,7 @@ namespace Drupal\islandora\EventGenerator;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Action\ConfigurableActionBase;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -56,6 +57,13 @@ abstract class EmitEvent extends ConfigurableActionBase implements ContainerFact
   protected $auth;
 
   /**
+   * The messenger.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface
+   */
+  private $messenger;
+
+  /**
    * Constructs a EmitEvent action.
    *
    * @param array $configuration
@@ -74,6 +82,8 @@ abstract class EmitEvent extends ConfigurableActionBase implements ContainerFact
    *   Stomp client.
    * @param \Drupal\jwt\Authentication\Provider\JwtAuth $auth
    *   JWT Auth client.
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   *   The messenger.
    */
   public function __construct(
     array $configuration,
@@ -83,7 +93,8 @@ abstract class EmitEvent extends ConfigurableActionBase implements ContainerFact
     EntityTypeManagerInterface $entity_type_manager,
     EventGeneratorInterface $event_generator,
     StatefulStomp $stomp,
-    JwtAuth $auth
+    JwtAuth $auth,
+    MessengerInterface $messenger
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->account = $account;
@@ -91,6 +102,7 @@ abstract class EmitEvent extends ConfigurableActionBase implements ContainerFact
     $this->eventGenerator = $event_generator;
     $this->stomp = $stomp;
     $this->auth = $auth;
+    $this->messenger = $messenger;
   }
 
   /**
@@ -121,7 +133,7 @@ abstract class EmitEvent extends ConfigurableActionBase implements ContainerFact
       \Drupal::logger('islandora')->error(
         t('Error getting JWT token for message. Check JWT Configuration.')
       );
-      drupal_set_message(
+      $this->messenger->addMessage(
         t('Error getting JWT token for message. Check JWT Configuration.'), 'error'
       );
       return;
@@ -141,7 +153,7 @@ abstract class EmitEvent extends ConfigurableActionBase implements ContainerFact
       \Drupal::logger('islandora')->error(
         t('Error generating event: @msg', ['@msg' => $e->getMessage()])
       );
-      drupal_set_message(
+      $this->messenger->addMessage(
         t('Error generating event: @msg', ['@msg' => $e->getMessage()]),
         'error'
       );
@@ -162,7 +174,7 @@ abstract class EmitEvent extends ConfigurableActionBase implements ContainerFact
       );
 
       // Notify user.
-      drupal_set_message(
+      $this->messenger->addMessage(
         t('Error publishing message: @msg',
           ['@msg' => $e->getMessage()]
         ),
