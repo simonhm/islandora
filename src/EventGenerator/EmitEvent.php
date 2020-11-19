@@ -61,7 +61,7 @@ abstract class EmitEvent extends ConfigurableActionBase implements ContainerFact
    *
    * @var \Drupal\Core\Messenger\MessengerInterface
    */
-  private $messenger;
+  protected $messenger;
 
   /**
    * Constructs a EmitEvent action.
@@ -117,7 +117,8 @@ abstract class EmitEvent extends ConfigurableActionBase implements ContainerFact
       $container->get('entity_type.manager'),
       $container->get('islandora.eventgenerator'),
       $container->get('islandora.stomp'),
-      $container->get('jwt.authentication.jwt')
+      $container->get('jwt.authentication.jwt'),
+      $container->get('messenger')
     );
   }
 

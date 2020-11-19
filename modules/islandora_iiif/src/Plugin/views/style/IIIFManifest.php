@@ -80,7 +80,7 @@ class IIIFManifest extends StylePluginBase {
    *
    * @var \Drupal\Core\Messenger\MessengerInterface
    */
-  private $messenger;
+  protected $messenger;
 
   /**
    * {@inheritdoc}
@@ -108,7 +108,8 @@ class IIIFManifest extends StylePluginBase {
       $container->get('request_stack')->getCurrentRequest(),
       $container->get('config.factory')->get('islandora_iiif.settings'),
       $container->get('file_system'),
-      $container->get('http_client')
+      $container->get('http_client'),
+      $container->get('messenger')
     );
   }
 
