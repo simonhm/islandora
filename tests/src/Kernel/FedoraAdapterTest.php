@@ -4,6 +4,7 @@ namespace Drupal\Tests\islandora\Kernel;
 
 use Drupal\islandora\Flysystem\Adapter\FedoraAdapter;
 use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\Utils;
 use GuzzleHttp\Psr7\Response;
 use Islandora\Chullo\IFedoraApi;
 use League\Flysystem\Config;
@@ -52,7 +53,7 @@ class FedoraAdapterTest extends IslandoraKernelTestBase {
       ]);
     $prophecy->getHeader('Content-Type')->willReturn(['text/plain']);
     $prophecy->getHeader('Content-Length')->willReturn([strlen("DERP")]);
-    $prophecy->getBody()->willReturn(PSR7\stream_for("DERP"));
+    $prophecy->getBody()->willReturn(Utils::streamFor("DERP"));
     $response = $prophecy->reveal();
 
     $prophecy = $this->prophesize(IFedoraApi::class);
@@ -118,7 +119,7 @@ class FedoraAdapterTest extends IslandoraKernelTestBase {
       ]);
     $prophecy->getHeader('Content-Type')->willReturn(['text/plain']);
     $prophecy->getHeader('Content-Length')->willReturn([strlen("DERP")]);
-    $prophecy->getBody()->willReturn(PSR7\stream_for("DERP"));
+    $prophecy->getBody()->willReturn(Utils::streamFor("DERP"));
 
     $fedora_prophecy->getResourceHeaders('')->willReturn($prophecy->reveal());
 
@@ -610,7 +611,7 @@ class FedoraAdapterTest extends IslandoraKernelTestBase {
       ]);
     $prophecy->getHeader('Content-Type')->willReturn(['text/plain']);
     $prophecy->getHeader('Content-Length')->willReturn([strlen("DERP")]);
-    $prophecy->getBody()->willReturn(PSR7\stream_for("DERP"));
+    $prophecy->getBody()->willReturn(Utils::streamFor("DERP"));
     $response = $prophecy->reveal();
 
     $fedora_prophecy = $this->prophesize(IFedoraApi::class);
