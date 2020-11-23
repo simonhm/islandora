@@ -8,6 +8,7 @@ use League\Flysystem\Adapter\Polyfill\NotSupportingVisibilityTrait;
 use League\Flysystem\Adapter\Polyfill\StreamedCopyTrait;
 use League\Flysystem\Config;
 use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\Header;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\StreamWrapper;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesserInterface;
@@ -144,7 +145,7 @@ class FedoraAdapter implements AdapterInterface {
     // NonRDFSource's are considered files.  Everything else is a
     // directory.
     $type = 'dir';
-    $links = Psr7\parse_header($response->getHeader('Link'));
+    $links = Header::parse($response->getHeader('Link'));
     foreach ($links as $link) {
       if ($link['rel'] == 'type' && $link[0] == '<http://www.w3.org/ns/ldp#NonRDFSource>') {
         $type = 'file';
