@@ -139,7 +139,7 @@ class LinkHeaderTest extends IslandoraFunctionalTestBase {
     $rest_url = Url::fromRoute('islandora.media_source_update', ['media' => $this->media->id()])
       ->setAbsolute()
       ->toString();
-    $media_url = $this->media->toUrl('canonical', ['absolute' => TRUE]);
+    $media_url = $this->media->toUrl('canonical', ['absolute' => TRUE])->toString();
 
     // Perform a GET request as anonymous.
     $this->drupalGet($media_url, [], ['Cache-Control: no-cache']);
