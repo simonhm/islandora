@@ -154,7 +154,7 @@ class JsonldSelfReferenceReactionTest extends IslandoraFunctionalTestBase {
 
     list($file, $media) = $this->makeMediaAndFile($account);
     $media_url = $media->url('canonical', ['absolute' => TRUE]);
-    $file_url = $file->url('canonical', ['absolute' => TRUE]);
+    $file_url = $file->createFileUrl(FALSE);
 
     $this->drupalGet($media_url);
     $this->assertSession()->statusCodeEquals(200);

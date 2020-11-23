@@ -64,7 +64,7 @@ class ViewModeAlterReactionTest extends IslandoraFunctionalTestBase {
     $this->drupalLogin($account);
 
     // Stash the node's url.
-    $url = $this->referencer->url('canonical', ['absolute' => TRUE]);
+    $url = $this->referencer->toUrl('canonical', ['absolute' => TRUE]);
     $this->drupalGet($url);
 
     // Make sure we're viewing the default (e.g. the media field is displayed).

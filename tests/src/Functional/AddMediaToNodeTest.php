@@ -3,7 +3,7 @@
 namespace Drupal\Tests\islandora\Functional;
 
 use Drupal\Core\Url;
-use Drupal\field\Tests\EntityReference\EntityReferenceTestTrait;
+use Drupal\Tests\field\Traits\EntityReferenceTestTrait;
 
 /**
  * Tests the RelatedLinkHeader view alter.
