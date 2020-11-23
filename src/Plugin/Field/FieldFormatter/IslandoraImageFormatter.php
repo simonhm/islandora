@@ -124,7 +124,7 @@ class IslandoraImageFormatter extends ImageFormatter {
       return $elements;
     }
 
-    $url = $node->urlInfo();
+    $url = $node->toUrl()->toString();
 
     foreach ($elements as &$element) {
       $element['#url'] = $url;

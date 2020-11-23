@@ -5,6 +5,7 @@ namespace Drupal\islandora\Plugin\Action;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\islandora\IslandoraUtils;
@@ -43,6 +44,13 @@ class AbstractGenerateDerivative extends EmitEvent {
   protected $token;
 
   /**
+   * The messenger.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface
+   */
+  protected $messenger;
+
+  /**
    * Constructs a EmitEvent action.
    *
    * @param array $configuration
@@ -67,6 +75,8 @@ class AbstractGenerateDerivative extends EmitEvent {
    *   Media source service.
    * @param \Drupal\token\TokenInterface $token
    *   Token service.
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   *   The messenger.
    */
   public function __construct(
     array $configuration,
@@ -79,7 +89,8 @@ class AbstractGenerateDerivative extends EmitEvent {
     JwtAuth $auth,
     IslandoraUtils $utils,
     MediaSourceService $media_source,
-    TokenInterface $token
+    TokenInterface $token,
+    MessengerInterface $messenger
   ) {
     parent::__construct(
       $configuration,
@@ -89,11 +100,13 @@ class AbstractGenerateDerivative extends EmitEvent {
       $entity_type_manager,
       $event_generator,
       $stomp,
-      $auth
+      $auth,
+      $messenger
     );
     $this->utils = $utils;
     $this->mediaSource = $media_source;
     $this->token = $token;
+    $this->messenger = $messenger;
   }
 
   /**
@@ -111,7 +124,8 @@ class AbstractGenerateDerivative extends EmitEvent {
       $container->get('jwt.authentication.jwt'),
       $container->get('islandora.utils'),
       $container->get('islandora.media_source_service'),
-      $container->get('token')
+      $container->get('token'),
+      $container->get('messenger')
     );
   }
 
@@ -127,7 +141,7 @@ class AbstractGenerateDerivative extends EmitEvent {
       'mimetype' => '',
       'args' => '',
       'destination_media_type' => '',
-      'scheme' => file_default_scheme(),
+      'scheme' => \Drupal::config('system.file')->get('default_scheme'),
       'path' => '[date:custom:Y]-[date:custom:m]/[node:nid].bin',
     ];
   }
