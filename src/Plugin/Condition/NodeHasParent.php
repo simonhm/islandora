@@ -93,7 +93,7 @@ class NodeHasParent extends ConditionPluginBase implements ContainerFactoryPlugi
     $options = array_combine($node_fields, $node_fields);
     $form['parent_reference_field'] = [
       '#type' => 'select',
-      '#title' => $this->('Field that contains reference to parents'),
+      '#title' => $this->t('Field that contains reference to parents'),
       '#options' => $options,
       '#default_value' => $this->configuration['parent_reference_field'],
       '#required' => TRUE,

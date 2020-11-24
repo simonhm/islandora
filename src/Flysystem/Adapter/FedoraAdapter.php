@@ -7,7 +7,6 @@ use League\Flysystem\AdapterInterface;
 use League\Flysystem\Adapter\Polyfill\NotSupportingVisibilityTrait;
 use League\Flysystem\Adapter\Polyfill\StreamedCopyTrait;
 use League\Flysystem\Config;
-use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Header;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\StreamWrapper;
@@ -378,7 +377,7 @@ class FedoraAdapter implements AdapterInterface {
     $return = NULL;
     if ($response->getStatusCode() == 410) {
       $return = FALSE;
-      $link_headers = Psr7\parse_header($response->getHeader('Link'));
+      $link_headers = Header::parse($response->getHeader('Link'));
       if ($link_headers) {
         $tombstones = array_filter($link_headers, function ($o) {
           return (isset($o['rel']) && $o['rel'] == 'hasTombstone');

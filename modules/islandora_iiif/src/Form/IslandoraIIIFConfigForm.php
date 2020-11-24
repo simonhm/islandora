@@ -41,7 +41,7 @@ class IslandoraIIIFConfigForm extends ConfigFormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('http_client'),
-      $container->get('config.factory'),
+      $container->get('config.factory')
     );
   }
 

@@ -5,6 +5,7 @@ namespace Drupal\islandora\Controller;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Connection;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Routing\RouteMatch;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\media\Entity\Media;
@@ -234,7 +235,7 @@ class MediaSourceController extends ControllerBase {
     $content_location = $request->headers->get('Content-Location', "");
     $contents = $request->getContent();
     if ($contents) {
-      $file = file_save_data($contents, $content_location, FILE_EXISTS_REPLACE);
+      $file = file_save_data($contents, $content_location, FileSystemInterface::EXISTS_REPLACE);
       if ($media->hasField($destination_field)) {
         $media->{$destination_field}->setValue([
           'target_id' => $file->id(),

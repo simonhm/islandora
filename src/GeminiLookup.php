@@ -5,7 +5,7 @@ namespace Drupal\islandora;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\islandora\MediaSource\MediaSourceService;
 use Drupal\jwt\Authentication\Provider\JwtAuth;
-use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\Header;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Islandora\Crayfish\Commons\Client\GeminiClient;
@@ -136,7 +136,7 @@ class GeminiLookup {
         $urls['fedora'],
         ['allow_redirects' => FALSE, 'headers' => ['Authorization' => $token]]
       );
-      $links = Psr7\parse_header($head->getHeader("Link"));
+      $links = Header::parse($head->getHeader("Link"));
       foreach ($links as $link) {
         if ($link['rel'] == 'describedby') {
           return trim($link[0], '<>');

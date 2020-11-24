@@ -75,7 +75,7 @@ class OcrTextFormatter extends FormatterBase implements ContainerFactoryPluginIn
       $configuration['third_party_settings'],
       $container->get('renderer'),
       $container->get('config.factory'),
-      $container->get('entity_type.manager'),
+      $container->get('entity_type.manager')
     );
   }
 
