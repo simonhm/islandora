@@ -236,32 +236,32 @@ class AbstractGenerateDerivativeMediaFile extends EmitEvent {
 
     $form['args'] = [
       '#type' => 'textfield',
-      '#title' => t('Additional arguments'),
+      '#title' => $this->t('Additional arguments'),
       '#default_value' => $this->configuration['args'],
       '#rows' => '8',
-      '#description' => t('Additional command line arguments'),
+      '#description' => $this->t('Additional command line arguments'),
     ];
 
     $form['mimetype'] = [
       '#type' => 'textfield',
-      '#title' => t('Mimetype'),
+      '#title' => $this->t('Mimetype'),
       '#default_value' => $this->configuration['mimetype'],
       '#required' => TRUE,
       '#rows' => '8',
-      '#description' => t('Mimetype to convert to (e.g. image/jpeg, video/mp4, etc...)'),
+      '#description' => $this->t('Mimetype to convert to (e.g. image/jpeg, video/mp4, etc...)'),
     ];
 
     $form['path'] = [
       '#type' => 'textfield',
-      '#title' => t('File path'),
+      '#title' => $this->t('File path'),
       '#default_value' => $this->configuration['path'],
-      '#description' => t('Path within the upload destination where files will be stored. Includes the filename and optional extension.'),
+      '#description' => $this->t('Path within the upload destination where files will be stored. Includes the filename and optional extension.'),
     ];
     $form['queue'] = [
       '#type' => 'textfield',
-      '#title' => t('Queue name'),
+      '#title' => $this->t('Queue name'),
       '#default_value' => $this->configuration['queue'],
-      '#description' => t('Queue name to send along to help routing events, CHANGE WITH CARE. Defaults to :queue', [
+      '#description' => $this->t('Queue name to send along to help routing events, CHANGE WITH CARE. Defaults to :queue', [
         ':queue' => $this->defaultConfiguration()['queue'],
       ]),
     ];
@@ -278,14 +278,14 @@ class AbstractGenerateDerivativeMediaFile extends EmitEvent {
     if (count($exploded) != 2) {
       $form_state->setErrorByName(
         'mimetype',
-        t('Please enter a mimetype (e.g. image/jpeg, video/mp4, audio/mp3, etc...)')
+        $this->t('Please enter a mimetype (e.g. image/jpeg, video/mp4, audio/mp3, etc...)')
       );
     }
 
     if (empty($exploded[1])) {
       $form_state->setErrorByName(
         'mimetype',
-        t('Please enter a mimetype (e.g. image/jpeg, video/mp4, audio/mp3, etc...)')
+        $this->t('Please enter a mimetype (e.g. image/jpeg, video/mp4, audio/mp3, etc...)')
       );
     }
   }

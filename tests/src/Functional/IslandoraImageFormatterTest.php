@@ -78,7 +78,6 @@ class IslandoraImageFormatterTest extends IslandoraFunctionalTestBase {
     // Assert that the image is rendered into html as a link pointing
     // to the Node, not the Media (that's what the islandora_image
     // formatter does).
-
     $elements = $this->xpath(
       '//a[@href=:path]/img[@src=:url and @alt=:alt and @title=:title]',
       [

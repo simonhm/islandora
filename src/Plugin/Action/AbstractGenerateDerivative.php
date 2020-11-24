@@ -219,60 +219,60 @@ class AbstractGenerateDerivative extends EmitEvent {
     $form['source_term'] = [
       '#type' => 'entity_autocomplete',
       '#target_type' => 'taxonomy_term',
-      '#title' => t('Source term'),
+      '#title' => $this->t('Source term'),
       '#default_value' => $this->utils->getTermForUri($this->configuration['source_term_uri']),
       '#required' => TRUE,
-      '#description' => t('Term indicating the source media'),
+      '#description' => $this->t('Term indicating the source media'),
     ];
     $form['derivative_term'] = [
       '#type' => 'entity_autocomplete',
       '#target_type' => 'taxonomy_term',
-      '#title' => t('Derivative term'),
+      '#title' => $this->t('Derivative term'),
       '#default_value' => $this->utils->getTermForUri($this->configuration['derivative_term_uri']),
       '#required' => TRUE,
-      '#description' => t('Term indicating the derivative media'),
+      '#description' => $this->t('Term indicating the derivative media'),
     ];
     $form['destination_media_type'] = [
       '#type' => 'entity_autocomplete',
       '#target_type' => 'media_type',
-      '#title' => t('Derivative media type'),
+      '#title' => $this->t('Derivative media type'),
       '#default_value' => $this->getEntityById($this->configuration['destination_media_type']),
       '#required' => TRUE,
-      '#description' => t('The Drupal media type to create with this derivative, can be different than the source'),
+      '#description' => $this->t('The Drupal media type to create with this derivative, can be different than the source'),
     ];
     $form['mimetype'] = [
       '#type' => 'textfield',
-      '#title' => t('Mimetype'),
+      '#title' => $this->t('Mimetype'),
       '#default_value' => $this->configuration['mimetype'],
       '#required' => TRUE,
       '#rows' => '8',
-      '#description' => t('Mimetype to convert to (e.g. image/jpeg, video/mp4, etc...)'),
+      '#description' => $this->t('Mimetype to convert to (e.g. image/jpeg, video/mp4, etc...)'),
     ];
     $form['args'] = [
       '#type' => 'textfield',
-      '#title' => t('Additional arguments'),
+      '#title' => $this->t('Additional arguments'),
       '#default_value' => $this->configuration['args'],
       '#rows' => '8',
-      '#description' => t('Additional command line arguments'),
+      '#description' => $this->t('Additional command line arguments'),
     ];
     $form['scheme'] = [
       '#type' => 'select',
-      '#title' => t('File system'),
+      '#title' => $this->t('File system'),
       '#options' => $scheme_options,
       '#default_value' => $this->configuration['scheme'],
       '#required' => TRUE,
     ];
     $form['path'] = [
       '#type' => 'textfield',
-      '#title' => t('File path'),
+      '#title' => $this->t('File path'),
       '#default_value' => $this->configuration['path'],
-      '#description' => t('Path within the upload destination where files will be stored. Includes the filename and optional extension.'),
+      '#description' => $this->t('Path within the upload destination where files will be stored. Includes the filename and optional extension.'),
     ];
     $form['queue'] = [
       '#type' => 'textfield',
-      '#title' => t('Queue name'),
+      '#title' => $this->t('Queue name'),
       '#default_value' => $this->configuration['queue'],
-      '#description' => t('Queue name to send along to help routing events, CHANGE WITH CARE. Defaults to :queue', [
+      '#description' => $this->t('Queue name to send along to help routing events, CHANGE WITH CARE. Defaults to :queue', [
         ':queue' => $this->defaultConfiguration()['queue'],
       ]),
     ];
@@ -290,14 +290,14 @@ class AbstractGenerateDerivative extends EmitEvent {
     if (count($exploded_mime) != 2) {
       $form_state->setErrorByName(
         'mimetype',
-        t('Please enter a mimetype (e.g. image/jpeg, video/mp4, audio/mp3, etc...)')
+        $this->t('Please enter a mimetype (e.g. image/jpeg, video/mp4, audio/mp3, etc...)')
       );
     }
 
     if (empty($exploded_mime[1])) {
       $form_state->setErrorByName(
         'mimetype',
-        t('Please enter a mimetype (e.g. image/jpeg, video/mp4, audio/mp3, etc...)')
+        $this->t('Please enter a mimetype (e.g. image/jpeg, video/mp4, audio/mp3, etc...)')
       );
     }
   }

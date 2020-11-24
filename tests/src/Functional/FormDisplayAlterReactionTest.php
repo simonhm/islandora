@@ -8,7 +8,6 @@ namespace Drupal\Tests\islandora\Functional;
  * @group islandora
  */
 class FormDisplayAlterReactionTest extends IslandoraFunctionalTestBase {
-
   /**
    * @covers \Drupal\islandora\Plugin\ContextReaction\FormDisplayAlterReaction::execute
    * @covers \Drupal\islandora\Plugin\ContextReaction\FormDisplayAlterReaction::buildConfigurationForm
@@ -49,7 +48,7 @@ class FormDisplayAlterReactionTest extends IslandoraFunctionalTestBase {
 
     $this->drupalGet("admin/structure/context/test/reaction/add/form_display_alter");
     $this->getSession()->getPage()->findById("edit-reactions-form-display-alter-mode")->selectOption('node.secondary');
-    $this->getSession()->getPage()->pressButton(t('Save and continue'));
+    $this->getSession()->getPage()->pressButton($this->t('Save and continue'));
     $this->assertSession()->statusCodeEquals(200);
 
     drupal_flush_all_caches();
