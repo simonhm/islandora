@@ -8,6 +8,7 @@ namespace Drupal\Tests\islandora\Functional;
  * @group islandora
  */
 class FormDisplayAlterReactionTest extends IslandoraFunctionalTestBase {
+
   /**
    * @covers \Drupal\islandora\Plugin\ContextReaction\FormDisplayAlterReaction::execute
    * @covers \Drupal\islandora\Plugin\ContextReaction\FormDisplayAlterReaction::buildConfigurationForm

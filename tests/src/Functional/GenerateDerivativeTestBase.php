@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\islandora\Functional;
 
-
 /**
  * Tests the GenerateDerivative action.
  */
