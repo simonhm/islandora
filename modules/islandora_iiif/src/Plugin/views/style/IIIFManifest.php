@@ -75,7 +75,7 @@ class IIIFManifest extends StylePluginBase {
    */
   protected $fileSystem;
 
-   /**
+  /**
    * The messenger.
    *
    * @var \Drupal\Core\Messenger\MessengerInterface

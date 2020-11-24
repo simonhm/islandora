@@ -3,7 +3,6 @@
 namespace Drupal\Tests\islandora\Kernel;
 
 use Drupal\islandora\Flysystem\Adapter\FedoraAdapter;
-use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Utils;
 use GuzzleHttp\Psr7\Response;
 use Islandora\Chullo\IFedoraApi;
