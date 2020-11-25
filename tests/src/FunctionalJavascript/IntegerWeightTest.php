@@ -32,7 +32,7 @@ class IntegerWeightTest extends WebDriverTestBase {
     'integer_weight_test_views',
   ];
 
-  protected $defaultTheme = 'stable';
+  protected $defaultTheme = 'stark';
 
   /**
    * Name of the field.
