@@ -122,7 +122,7 @@ class IslandoraCommands extends DrushCommands {
       $account = $this->entityTypeManager->getStorage('user')->load($userid);
       $userSession = new UserSession([
         'uid'   => $account->id(),
-        'name'  => $account->getUsername(),
+        'name'  => $account->getDisplayName(),
         'roles' => $account->getRoles(),
       ]);
       $this->accountSwitcher->switchTo($userSession);
