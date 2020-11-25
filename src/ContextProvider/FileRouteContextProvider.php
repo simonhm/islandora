@@ -38,7 +38,7 @@ class FileRouteContextProvider implements ContextProviderInterface {
    * {@inheritdoc}
    */
   public function getRuntimeContexts(array $unqualified_context_ids) {
-    $context_definition = EntityContextDefinition::fromEntityTypeId('entity:file')->setLabel(NULL)->setRequired(FALSE);
+    $context_definition = EntityContextDefinition::fromEntityTypeId('file')->setLabel(NULL)->setRequired(FALSE);
 
     $value = NULL;
 
@@ -66,7 +66,7 @@ class FileRouteContextProvider implements ContextProviderInterface {
    * {@inheritdoc}
    */
   public function getAvailableContexts() {
-    $context = EntityContext::fromEntityTypeId('entity:file', $this->t('File from URL'));
+    $context = EntityContext::fromEntityTypeId('file', $this->t('File from URL'));
     return ['file' => $context];
   }
 

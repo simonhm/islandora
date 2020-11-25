@@ -38,7 +38,7 @@ class TermRouteContextProvider implements ContextProviderInterface {
    * {@inheritdoc}
    */
   public function getRuntimeContexts(array $unqualified_context_ids) {
-    $context_definition = EntityContextDefinition::fromEntityTypeId('entity:taxonomy_term')->setLabel(NULL)->setRequired(FALSE);
+    $context_definition = EntityContextDefinition::fromEntityTypeId('taxonomy_term')->setLabel(NULL)->setRequired(FALSE);
     $value = NULL;
 
     // Hack the taxonomy term out of the route.
@@ -65,7 +65,7 @@ class TermRouteContextProvider implements ContextProviderInterface {
    * {@inheritdoc}
    */
   public function getAvailableContexts() {
-    $context = EntityContext::fromEntityTypeId('entity:taxonomy_term', $this->t('Term from URL'));
+    $context = EntityContext::fromEntityTypeId('taxonomy_term', $this->t('Term from URL'));
     return ['taxonomy_term' => $context];
   }
 

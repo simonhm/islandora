@@ -43,7 +43,7 @@ class MediaContextProvider implements ContextProviderInterface {
    * {@inheritdoc}
    */
   public function getAvailableContexts() {
-    $context = EntityContext::fromEntityTypeId('entity:media', $this->t('Media from entity hook'));
+    $context = EntityContext::fromEntityType(\Drupal::entityTypeManager()->getDefinition('media'), $this->t('Media from URL'));
     return ['@islandora.media_route_context_provider:media' => $context];
   }
 

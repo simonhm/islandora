@@ -43,7 +43,7 @@ class TermContextProvider implements ContextProviderInterface {
    * {@inheritdoc}
    */
   public function getAvailableContexts() {
-    $context = EntityContext::fromEntityTypeId('entity:taxonomy_term', $this->t('Term from entity hook'));
+    $context = EntityContext::fromEntityTypeId('taxonomy_term', $this->t('Term from entity hook'));
     return ['@islandora.taxonomy_term_route_context_provider:taxonomy_term' => $context];
   }
 

@@ -43,7 +43,7 @@ class FileContextProvider implements ContextProviderInterface {
    * {@inheritdoc}
    */
   public function getAvailableContexts() {
-    $context = EntityContext::fromEntityTypeId('entity:file', $this->t('File from entity hook'));
+    $context = EntityContext::fromEntityTypeId('file', $this->t('File from entity hook'));
     return ['@islandora.file_route_context_provider:file' => $context];
   }
 

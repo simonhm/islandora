@@ -40,7 +40,7 @@ class MediaRouteContextProvider implements ContextProviderInterface {
    */
   public function getRuntimeContexts(array $unqualified_context_ids) {
     $result = [];
-    $context_definition = EntityContextDefinition::fromEntityTypeId('entity:media')->setLabel(NULL)->setRequired(FALSE);
+    $context_definition = EntityContextDefinition::fromEntityTypeId('media')->setLabel(NULL)->setRequired(FALSE);
     $value = NULL;
 
     // Hack the media out of the route.
@@ -71,7 +71,7 @@ class MediaRouteContextProvider implements ContextProviderInterface {
    * {@inheritdoc}
    */
   public function getAvailableContexts() {
-    $context = EntityContext::fromEntityTypeId('entity:media', $this->t('Media from URL'));
+    $context = EntityContext::fromEntityType(\Drupal::entityTypeManager()->getDefinition('media'), $this->t('Media from URL'));
     return ['media' => $context];
   }
 

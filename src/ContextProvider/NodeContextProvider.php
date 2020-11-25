@@ -43,7 +43,7 @@ class NodeContextProvider implements ContextProviderInterface {
    * {@inheritdoc}
    */
   public function getAvailableContexts() {
-    $context = EntityContext::fromEntityTypeId('entity:node', $this->t('Node from entity hook'));
+    $context = EntityContext::fromEntityTypeId('node', $this->t('Node from entity hook'));
     return ['@node.node_route_context:node' => $context];
   }
 
