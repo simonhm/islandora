@@ -32,6 +32,9 @@ class IslandoraFunctionalTestBase extends BrowserTestBase {
     'menu_link_content',
   ];
 
+  /**
+   * {@inheritdoc}
+   */
   protected $defaultTheme = 'stark';
 
   /**
