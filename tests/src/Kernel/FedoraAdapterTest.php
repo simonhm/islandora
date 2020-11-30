@@ -620,7 +620,6 @@ class FedoraAdapterTest extends IslandoraKernelTestBase {
     $prophecy->getStatusCode()->willReturn(201);
     $response = $prophecy->reveal();
 
-    $date = new \DateTime();
     $fedora_prophecy->createVersion('',
       Argument::any(), NULL,
       Argument::any())->willReturn($prophecy->reveal());
