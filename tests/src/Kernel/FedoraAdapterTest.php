@@ -621,7 +621,6 @@ class FedoraAdapterTest extends IslandoraKernelTestBase {
     $response = $prophecy->reveal();
 
     $date = new \DateTime();
-    $timestamp = $date->format("D, d M Y H:i:s O");
     $fedora_prophecy->createVersion('',
       Argument::any(), NULL,
       Argument::any())->willReturn($prophecy->reveal());

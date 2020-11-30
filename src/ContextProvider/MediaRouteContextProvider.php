@@ -39,7 +39,6 @@ class MediaRouteContextProvider implements ContextProviderInterface {
    * {@inheritdoc}
    */
   public function getRuntimeContexts(array $unqualified_context_ids) {
-    $result = [];
     $context_definition = EntityContextDefinition::fromEntityTypeId('media')->setLabel(NULL)->setRequired(FALSE);
     $value = NULL;
 

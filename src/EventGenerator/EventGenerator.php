@@ -96,7 +96,6 @@ class EventGenerator implements EventGeneratorInterface {
     $event["target"] = $fedora_url;
 
     $entity_type = $entity->getEntityTypeId();
-    $event_type = $data["event"];
     if ($data["event"] == "Generate Derivative") {
       $event["type"] = "Activity";
       $event["summary"] = $data["event"];

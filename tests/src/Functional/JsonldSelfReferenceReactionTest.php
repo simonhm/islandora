@@ -153,7 +153,7 @@ class JsonldSelfReferenceReactionTest extends IslandoraFunctionalTestBase {
     $reaction_id = 'islandora_map_uri_predicate';
 
     list($file, $media) = $this->makeMediaAndFile($account);
-    $media_url = $media->url('canonical', ['absolute' => TRUE]);
+    $media_url = $media->toUrl('canonical', ['absolute' => TRUE]);
     $file_url = $file->createFileUrl(FALSE);
 
     $this->drupalGet($media_url);

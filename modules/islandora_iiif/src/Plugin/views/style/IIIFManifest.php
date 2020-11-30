@@ -186,7 +186,7 @@ class IIIFManifest extends StylePluginBase {
         foreach ($images as $image) {
           // Create the IIIF URL for this file
           // Visiting $iiif_url will resolve to the info.json for the image.
-          $file_url = $image->entity->url();
+          $file_url = $image->entity->toUrl();
           $mime_type = $image->entity->getMimeType();
           $iiif_url = rtrim($iiif_address, '/') . '/' . urlencode($file_url);
 

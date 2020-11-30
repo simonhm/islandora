@@ -48,7 +48,6 @@ class ContentEntityTypeTest extends IslandoraFunctionalTestBase {
 
     // Add a new media and confirm Hello World! is not printed to the
     // screen.
-    $file = current($this->getTestFiles('file'));
     $values = [
       'name[0][value]' => 'Test Media',
       'files[field_media_file_0]' => __DIR__ . '/../../fixtures/test_file.txt',

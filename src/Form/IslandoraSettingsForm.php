@@ -272,7 +272,6 @@ class IslandoraSettingsForm extends ConfigFormBase {
     $geminiUrlValue = trim($form_state->getValue(self::GEMINI_URL));
     if (!empty($geminiUrlValue)) {
       try {
-        $geminiUrl = Url::fromUri($geminiUrlValue);
         $client = GeminiClient::create($geminiUrlValue, $this->logger('islandora'));
         $client->findByUri('http://example.org');
       }
