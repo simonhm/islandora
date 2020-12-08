@@ -32,5 +32,4 @@ dependencies:
   - drupal:content_translation
   - drupal:flysystem
   - drupal:token
-  - drupal:hook_post_action
   - drupal:file_replace
