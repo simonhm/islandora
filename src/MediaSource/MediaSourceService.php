@@ -308,7 +308,7 @@ class MediaSourceService {
 
       // Set alt text.
       if ($source_field_config->getSetting('alt_field') && $source_field_config->getSetting('alt_field_required')) {
-        $media_struct[$source_field]['alt'] = $file->getFilename;
+        $media_struct[$source_field]['alt'] = $file->getFilename();
       }
 
       $media = $this->entityTypeManager->getStorage('media')->create($media_struct);
