@@ -141,7 +141,7 @@ class AbstractGenerateDerivative extends EmitEvent {
       'mimetype' => '',
       'args' => '',
       'destination_media_type' => '',
-      'scheme' => \Drupal::config('system.file')->get('default_scheme'),
+      'scheme' => $this->config->get('default_scheme'),
       'path' => '[date:custom:Y]-[date:custom:m]/[node:nid].bin',
     ];
   }

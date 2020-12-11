@@ -25,7 +25,7 @@ class GenerateImageDerivativeFile extends AbstractGenerateDerivativeMediaFile {
     $config['mimetype'] = 'application/xml';
     $config['queue'] = 'islandora-connector-houdini';
     $config['destination_media_type'] = 'file';
-    $config['scheme'] = \Drupal::config('system.file')->get('default_scheme');
+    $config['scheme'] = $this->config('system.file')->get('default_scheme');
     return $config;
   }
 
