@@ -318,4 +318,68 @@ class MediaSourceService {
 
   }
 
+  /**
+   * Creates a new File using the provided resource, adding it to a Media.
+   *
+   * @param \Drupal\media\MediaInterface $media
+   *   The Media that will receive the new file.
+   * @param string $destination_field
+   *   The field on the media where the file will go.
+   * @param resource $resource
+   *   New file contents as a resource.
+   * @param string $mimetype
+   *   New mimetype of contents.
+   * @param string $content_location
+   *   Drupal/PHP stream wrapper for where to upload the binary.
+   *
+   * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+   * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+   */
+  public function putToMedia(
+    MediaInterface $media,
+    $destination_field,
+    $resource,
+    $mimetype,
+    $content_location
+  ) {
+    if ($media->hasField($destination_field)) {
+      // Construct the File.
+      $file = $this->entityTypeManager->getStorage('file')->create([
+        'uid' => $this->account->id(),
+        'uri' => $content_location,
+        'filename' => $this->fileSystem->basename($content_location),
+        'filemime' => $mimetype,
+        'status' => FILE_STATUS_PERMANENT,
+      ]);
+
+      // Validate file extension.
+      $bundle = $media->bundle();
+      $destination_field_config = $this->entityTypeManager->getStorage('field_config')->load("media.$bundle.$destination_field");
+      $valid_extensions = $destination_field_config->getSetting('file_extensions');
+      $errors = file_validate_extensions($file, $valid_extensions);
+
+      if (!empty($errors)) {
+        throw new BadRequestHttpException("Invalid file extension.  Valid types are $valid_extensions");
+      }
+
+      $directory = $this->fileSystem->dirname($content_location);
+      if (!file_prepare_directory($directory, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS)) {
+        throw new HttpException(500, "The destination directory does not exist, could not be created, or is not writable");
+      }
+
+      // Copy over the file content.
+      $this->updateFile($file, $resource, $mimetype);
+      $file->save();
+
+      // Update the media.
+      $media->{$destination_field}->setValue([
+        'target_id' => $file->id(),
+      ]);
+      $media->save();
+    }
+    else {
+      throw new BadRequestHttpException("Media does not have destination field $destination_field");
+    }
+  }
+
 }

@@ -231,23 +231,41 @@ class MediaSourceController extends ControllerBase {
   public function attachToMedia(
     Media $media,
     string $destination_field,
-    Request $request) {
+    Request $request
+  ) {
     $content_location = $request->headers->get('Content-Location', "");
-    $contents = $request->getContent();
-    if ($contents) {
-      $file = file_save_data($contents, $content_location, FileSystemInterface::EXISTS_REPLACE);
-      if ($media->hasField($destination_field)) {
-        $media->{$destination_field}->setValue([
-          'target_id' => $file->id(),
-        ]);
-        $media->save();
-      }
-      else {
-        $this->getLogger('islandora')->warning("Field $destination_field is not defined in  Media Type {$media->bundle()}");
-      }
+    if (empty($content_location)) {
+      throw new BadRequestHttpException("Missing Content-Location header");
     }
-    // Should only see this with a GET request for testing.
-    return new Response("<h1>Complete</h1>");
+
+    $content_type = $request->headers->get('Content-Type', "");
+    if (empty($content_type)) {
+      throw new BadRequestHttpException("Missing Content-Type header");
+    }
+
+    // Since we create both a Media and its File,
+    // start a transaction.
+    $transaction = $this->database->startTransaction();
+
+    try {
+      $this->service->putToMedia(
+        $media,
+        $destination_field,
+        $request->getContent(TRUE),
+        $content_type,
+        $content_location
+      );
+      // Should only see this with a GET request for testing.
+      return new Response("<h1>Complete</h1>");
+    }
+    catch (HttpException $e) {
+      $transaction->rollBack();
+      throw $e;
+    }
+    catch (\Exception $e) {
+      $transaction->rollBack();
+      throw new HttpException(500, $e->getMessage());
+    }
   }
 
   /**
