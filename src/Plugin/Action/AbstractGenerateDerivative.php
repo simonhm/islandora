@@ -2,7 +2,7 @@
 
 namespace Drupal\islandora\Plugin\Action;
 
-use Drupal\Core\Config\ConfigFactory;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -54,7 +54,7 @@ class AbstractGenerateDerivative extends EmitEvent {
   /**
    * The configFactory.
    *
-   * @var \Drupal\Core\Config\ConfigFactory
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
   protected $configFactory;
 
@@ -85,7 +85,7 @@ class AbstractGenerateDerivative extends EmitEvent {
    *   Token service.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger.
-   * @param \Drupal\Core\Config\ConfigFactory $configFactory
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory.
    */
   public function __construct(
@@ -101,7 +101,7 @@ class AbstractGenerateDerivative extends EmitEvent {
     MediaSourceService $media_source,
     TokenInterface $token,
     MessengerInterface $messenger,
-    ConfigFactory $configFactory
+    ConfigFactoryInterface $config_factory
   ) {
     parent::__construct(
       $configuration,
@@ -113,13 +113,13 @@ class AbstractGenerateDerivative extends EmitEvent {
       $stomp,
       $auth,
       $messenger,
-      $configFactory
+      $config_factory
     );
-    $this->config = $configFactory;
     $this->utils = $utils;
     $this->mediaSource = $media_source;
     $this->token = $token;
     $this->messenger = $messenger;
+    $this->configFactory = $config_factory;
   }
 
   /**
@@ -147,6 +147,7 @@ class AbstractGenerateDerivative extends EmitEvent {
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
+    dsm($this->configFactory->get('system.file')->get('default_scheme'));
     return [
       'queue' => 'islandora-connector-houdini',
       'event' => 'Generate Derivative',
@@ -155,7 +156,7 @@ class AbstractGenerateDerivative extends EmitEvent {
       'mimetype' => '',
       'args' => '',
       'destination_media_type' => '',
-      'scheme' => $this->config->get('default_scheme'),
+      'scheme' => $this->configFactory->get('system.file')->get('default_scheme'),
       'path' => '[date:custom:Y]-[date:custom:m]/[node:nid].bin',
     ];
   }
