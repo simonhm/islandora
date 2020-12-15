@@ -139,6 +139,7 @@ class AbstractGenerateDerivative extends EmitEvent {
       $container->get('islandora.media_source_service'),
       $container->get('token'),
       $container->get('messenger'),
+      $container->get('config.factory')
     );
   }
 
