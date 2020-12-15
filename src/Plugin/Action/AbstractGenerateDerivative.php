@@ -56,7 +56,7 @@ class AbstractGenerateDerivative extends EmitEvent {
    *
    * @var \Drupal\Core\Config\ConfigFactory
    */
-  protected $config;
+  protected $configFactory;
 
   /**
    * Constructs a EmitEvent action.
