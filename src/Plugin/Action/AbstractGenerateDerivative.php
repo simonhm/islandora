@@ -2,7 +2,7 @@
 
 namespace Drupal\islandora\Plugin\Action;
 
-use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\Config;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -52,11 +52,11 @@ class AbstractGenerateDerivative extends EmitEvent {
   protected $messenger;
 
   /**
-   * The configFactory.
+   * The system file config.
    *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   * @var \Drupal\Core\Config\ImmutableConfig
    */
-  protected $configFactory;
+  protected $config;
 
   /**
    * Constructs a EmitEvent action.
@@ -85,8 +85,8 @@ class AbstractGenerateDerivative extends EmitEvent {
    *   Token service.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   The config factory.
+   * @param \Drupal\Core\Config\Config $config
+   *   The system file config.
    */
   public function __construct(
     array $configuration,
@@ -101,7 +101,7 @@ class AbstractGenerateDerivative extends EmitEvent {
     MediaSourceService $media_source,
     TokenInterface $token,
     MessengerInterface $messenger,
-    ConfigFactoryInterface $config_factory
+    Config $config
   ) {
     parent::__construct(
       $configuration,
@@ -112,14 +112,13 @@ class AbstractGenerateDerivative extends EmitEvent {
       $event_generator,
       $stomp,
       $auth,
-      $messenger,
-      $config_factory
+      $messenger
     );
     $this->utils = $utils;
     $this->mediaSource = $media_source;
     $this->token = $token;
     $this->messenger = $messenger;
-    $this->configFactory = $config_factory;
+    $this->config = $config;
   }
 
   /**
@@ -139,7 +138,7 @@ class AbstractGenerateDerivative extends EmitEvent {
       $container->get('islandora.media_source_service'),
       $container->get('token'),
       $container->get('messenger'),
-      $container->get('config.factory')
+      $container->get('config.factory')->get('system.file')
     );
   }
 
@@ -147,7 +146,6 @@ class AbstractGenerateDerivative extends EmitEvent {
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    dsm($this->configFactory->get('system.file')->get('default_scheme'));
     return [
       'queue' => 'islandora-connector-houdini',
       'event' => 'Generate Derivative',
@@ -156,7 +154,7 @@ class AbstractGenerateDerivative extends EmitEvent {
       'mimetype' => '',
       'args' => '',
       'destination_media_type' => '',
-      'scheme' => $this->configFactory->get('system.file')->get('default_scheme'),
+      'scheme' => $this->config->get('default_scheme'),
       'path' => '[date:custom:Y]-[date:custom:m]/[node:nid].bin',
     ];
   }
