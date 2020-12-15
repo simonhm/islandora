@@ -27,7 +27,7 @@ class GenerateOCRDerivativeFile extends AbstractGenerateDerivativeMediaFile {
     $config['mimetype'] = 'application/xml';
     $config['queue'] = 'islandora-connector-ocr';
     $config['destination_media_type'] = 'file';
-    $config['scheme'] = $this->config('system.file')->get('default_scheme');
+    $config['scheme'] = $this->config->get('default_scheme');
     $config['destination_text_field_name'] = '';
     return $config;
   }
