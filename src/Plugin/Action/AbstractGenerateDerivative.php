@@ -2,6 +2,7 @@
 
 namespace Drupal\islandora\Plugin\Action;
 
+use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -51,6 +52,13 @@ class AbstractGenerateDerivative extends EmitEvent {
   protected $messenger;
 
   /**
+   * The configFactory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactory
+   */
+  protected $config;
+
+  /**
    * Constructs a EmitEvent action.
    *
    * @param array $configuration
@@ -77,6 +85,8 @@ class AbstractGenerateDerivative extends EmitEvent {
    *   Token service.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger.
+   * @param \Drupal\Core\Config\ConfigFactory
+   *   The config factory.
    */
   public function __construct(
     array $configuration,
@@ -90,7 +100,8 @@ class AbstractGenerateDerivative extends EmitEvent {
     IslandoraUtils $utils,
     MediaSourceService $media_source,
     TokenInterface $token,
-    MessengerInterface $messenger
+    MessengerInterface $messenger,
+    ConfigFactory $configFactory;
   ) {
     parent::__construct(
       $configuration,
@@ -101,9 +112,10 @@ class AbstractGenerateDerivative extends EmitEvent {
       $event_generator,
       $stomp,
       $auth,
-      $messenger
+      $messenger,
+      $configFactory
     );
-    $this->config = $configuration;
+    $this->config = $configFactory;
     $this->utils = $utils;
     $this->mediaSource = $media_source;
     $this->token = $token;
