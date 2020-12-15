@@ -2,7 +2,7 @@
 
 namespace Drupal\islandora\Plugin\Action;
 
-use Drupal\Core\Config\Config;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -85,7 +85,7 @@ class AbstractGenerateDerivative extends EmitEvent {
    *   Token service.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger.
-   * @param \Drupal\Core\Config\Config $config
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config
    *   The system file config.
    */
   public function __construct(
@@ -101,8 +101,13 @@ class AbstractGenerateDerivative extends EmitEvent {
     MediaSourceService $media_source,
     TokenInterface $token,
     MessengerInterface $messenger,
-    Config $config
+    ConfigFactoryInterface $config
   ) {
+    $this->utils = $utils;
+    $this->mediaSource = $media_source;
+    $this->token = $token;
+    $this->messenger = $messenger;
+    $this->config = $config->get('system.file');
     parent::__construct(
       $configuration,
       $plugin_id,
@@ -114,11 +119,6 @@ class AbstractGenerateDerivative extends EmitEvent {
       $auth,
       $messenger
     );
-    $this->utils = $utils;
-    $this->mediaSource = $media_source;
-    $this->token = $token;
-    $this->messenger = $messenger;
-    $this->config = $config;
   }
 
   /**
@@ -138,7 +138,7 @@ class AbstractGenerateDerivative extends EmitEvent {
       $container->get('islandora.media_source_service'),
       $container->get('token'),
       $container->get('messenger'),
-      $container->get('config.factory')->get('system.file')
+      $container->get('config.factory')
     );
   }
 
