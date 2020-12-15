@@ -85,7 +85,7 @@ class AbstractGenerateDerivative extends EmitEvent {
    *   Token service.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger.
-   * @param \Drupal\Core\Config\ConfigFactory
+   * @param \Drupal\Core\Config\ConfigFactory $configFactory
    *   The config factory.
    */
   public function __construct(
@@ -138,7 +138,7 @@ class AbstractGenerateDerivative extends EmitEvent {
       $container->get('islandora.utils'),
       $container->get('islandora.media_source_service'),
       $container->get('token'),
-      $container->get('messenger')
+      $container->get('messenger'),
     );
   }
 
