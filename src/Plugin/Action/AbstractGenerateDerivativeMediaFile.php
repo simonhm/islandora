@@ -2,6 +2,7 @@
 
 namespace Drupal\islandora\Plugin\Action;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManager;
@@ -65,6 +66,13 @@ class AbstractGenerateDerivativeMediaFile extends EmitEvent {
   protected $messenger;
 
   /**
+   * The system file config.
+   *
+   * @var \Drupal\Core\Config\ImmutableConfig
+   */
+  protected $config;
+
+  /**
    * Constructs a EmitEvent action.
    *
    * @param array $configuration
@@ -93,6 +101,8 @@ class AbstractGenerateDerivativeMediaFile extends EmitEvent {
    *   Field Manager service.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config
+   *   The system file config.
    */
   public function __construct(
     array $configuration,
@@ -107,8 +117,15 @@ class AbstractGenerateDerivativeMediaFile extends EmitEvent {
     MediaSourceService $media_source,
     Token $token,
     EntityFieldManagerInterface $entity_field_manager,
-    MessengerInterface $messenger
+    MessengerInterface $messenger,
+    ConfigFactoryInterface $config
   ) {
+    $this->utils = $utils;
+    $this->mediaSource = $media_source;
+    $this->token = $token;
+    $this->entityFieldManager = $entity_field_manager;
+    $this->messenger = $messenger;
+    $this->config = $config->get('system.file');
     parent::__construct(
       $configuration,
       $plugin_id,
@@ -120,11 +137,6 @@ class AbstractGenerateDerivativeMediaFile extends EmitEvent {
       $auth,
       $messenger
     );
-    $this->utils = $utils;
-    $this->mediaSource = $media_source;
-    $this->token = $token;
-    $this->entityFieldManager = $entity_field_manager;
-    $this->messenger = $messenger;
   }
 
   /**
@@ -144,7 +156,8 @@ class AbstractGenerateDerivativeMediaFile extends EmitEvent {
       $container->get('islandora.media_source_service'),
       $container->get('token'),
       $container->get('entity_field.manager'),
-      $container->get('messenger')
+      $container->get('messenger'),
+      $container->get('config.factory')
     );
   }
 
