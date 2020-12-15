@@ -101,7 +101,7 @@ class AbstractGenerateDerivative extends EmitEvent {
     MediaSourceService $media_source,
     TokenInterface $token,
     MessengerInterface $messenger,
-    ConfigFactory $configFactory;
+    ConfigFactory $configFactory
   ) {
     parent::__construct(
       $configuration,
