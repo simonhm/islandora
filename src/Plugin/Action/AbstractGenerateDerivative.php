@@ -103,6 +103,7 @@ class AbstractGenerateDerivative extends EmitEvent {
       $auth,
       $messenger
     );
+    $this->config = $configuration;
     $this->utils = $utils;
     $this->mediaSource = $media_source;
     $this->token = $token;
