@@ -92,8 +92,10 @@ class EventGenerator implements EventGeneratorInterface {
     ];
 
     $flysystem_config = Settings::get('flysystem');
-    $fedora_url = $flysystem_config['fedora']['config']['root'];
-    $event["target"] = $fedora_url;
+    if (array_key_exists('fedora', $flysystem_config)) {
+      $fedora_url = $flysystem_config['fedora']['config']['root'];
+      $event["target"] = $fedora_url;
+    }
 
     $entity_type = $entity->getEntityTypeId();
     if ($data["event"] == "Generate Derivative") {
