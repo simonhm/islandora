@@ -92,7 +92,7 @@ class EventGenerator implements EventGeneratorInterface {
     ];
 
     $flysystem_config = Settings::get('flysystem');
-    if (array_key_exists('fedora', $flysystem_config)) {
+    if ($flysystem_config != NULL && array_key_exists('fedora', $flysystem_config)) {
       $fedora_url = $flysystem_config['fedora']['config']['root'];
       $event["target"] = $fedora_url;
     }
