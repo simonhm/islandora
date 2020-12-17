@@ -51,12 +51,14 @@ class FedoraAdapterTest extends IslandoraKernelTestBase {
       ]);
     $prophecy->getHeader('Content-Type')->willReturn(['text/plain']);
     $prophecy->getHeader('Content-Length')->willReturn([strlen("DERP")]);
+    // phpcs:disable
     if (class_exists(\GuzzleHttp\Psr7\Utils::class)) {
       $prophecy->getBody()->willReturn(\GuzzleHttp\Psr7\Utils::streamFor("DERP"));
     }
     else {
       $prophecy->getBody()->willReturn(\GuzzleHttp\Psr7\stream_for("DERP"));
     }
+    // phpcs:enable
     $response = $prophecy->reveal();
 
     $prophecy = $this->prophesize(IFedoraApi::class);
@@ -122,13 +124,14 @@ class FedoraAdapterTest extends IslandoraKernelTestBase {
       ]);
     $prophecy->getHeader('Content-Type')->willReturn(['text/plain']);
     $prophecy->getHeader('Content-Length')->willReturn([strlen("DERP")]);
+    // phpcs:disable
     if (class_exists(\GuzzleHttp\Psr7\Utils::class)) {
       $prophecy->getBody()->willReturn(\GuzzleHttp\Psr7\Utils::streamFor("DERP"));
     }
     else {
       $prophecy->getBody()->willReturn(\GuzzleHttp\Psr7\stream_for("DERP"));
     }
-
+    // phpcs:enable
     $fedora_prophecy->getResourceHeaders('')->willReturn($prophecy->reveal());
 
     $api = $fedora_prophecy->reveal();
@@ -619,12 +622,14 @@ class FedoraAdapterTest extends IslandoraKernelTestBase {
       ]);
     $prophecy->getHeader('Content-Type')->willReturn(['text/plain']);
     $prophecy->getHeader('Content-Length')->willReturn([strlen("DERP")]);
+    // phpcs:disable
     if (class_exists(\GuzzleHttp\Psr7\Utils::class)) {
       $prophecy->getBody()->willReturn(\GuzzleHttp\Psr7\Utils::streamFor("DERP"));
     }
     else {
       $prophecy->getBody()->willReturn(\GuzzleHttp\Psr7\stream_for("DERP"));
     }
+    // phpcs:enable
     $response = $prophecy->reveal();
 
     $fedora_prophecy = $this->prophesize(IFedoraApi::class);
