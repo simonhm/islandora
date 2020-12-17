@@ -3,7 +3,6 @@
 namespace Drupal\Tests\islandora\Kernel;
 
 use Drupal\islandora\Flysystem\Adapter\FedoraAdapter;
-use GuzzleHttp\Psr7\Utils;
 use GuzzleHttp\Psr7\Response;
 use Islandora\Chullo\IFedoraApi;
 use League\Flysystem\Config;
@@ -52,7 +51,12 @@ class FedoraAdapterTest extends IslandoraKernelTestBase {
       ]);
     $prophecy->getHeader('Content-Type')->willReturn(['text/plain']);
     $prophecy->getHeader('Content-Length')->willReturn([strlen("DERP")]);
-    $prophecy->getBody()->willReturn(Utils::streamFor("DERP"));
+    if (class_exists(\GuzzleHttp\Psr7\Utils::class)) {
+      $prophecy->getBody()->willReturn(\GuzzleHttp\Psr7\Utils::streamFor("DERP"));
+    }
+    else {
+      $prophecy->getBody()->willReturn(\GuzzleHttp\Psr7\stream_for("DERP"));
+    }
     $response = $prophecy->reveal();
 
     $prophecy = $this->prophesize(IFedoraApi::class);
@@ -118,7 +122,12 @@ class FedoraAdapterTest extends IslandoraKernelTestBase {
       ]);
     $prophecy->getHeader('Content-Type')->willReturn(['text/plain']);
     $prophecy->getHeader('Content-Length')->willReturn([strlen("DERP")]);
-    $prophecy->getBody()->willReturn(Utils::streamFor("DERP"));
+    if (class_exists(\GuzzleHttp\Psr7\Utils::class)) {
+      $prophecy->getBody()->willReturn(\GuzzleHttp\Psr7\Utils::streamFor("DERP"));
+    }
+    else {
+      $prophecy->getBody()->willReturn(\GuzzleHttp\Psr7\stream_for("DERP"));
+    }
 
     $fedora_prophecy->getResourceHeaders('')->willReturn($prophecy->reveal());
 
@@ -610,7 +619,12 @@ class FedoraAdapterTest extends IslandoraKernelTestBase {
       ]);
     $prophecy->getHeader('Content-Type')->willReturn(['text/plain']);
     $prophecy->getHeader('Content-Length')->willReturn([strlen("DERP")]);
-    $prophecy->getBody()->willReturn(Utils::streamFor("DERP"));
+    if (class_exists(\GuzzleHttp\Psr7\Utils::class)) {
+      $prophecy->getBody()->willReturn(\GuzzleHttp\Psr7\Utils::streamFor("DERP"));
+    }
+    else {
+      $prophecy->getBody()->willReturn(\GuzzleHttp\Psr7\stream_for("DERP"));
+    }
     $response = $prophecy->reveal();
 
     $fedora_prophecy = $this->prophesize(IFedoraApi::class);
