@@ -158,6 +158,9 @@ class IslandoraSettingsForm extends ConfigFormBase {
     if ($flysystem_config != NULL) {
       $fedora_url = $flysystem_config['fedora']['config']['root'];
     }
+    else {
+      $fedora_url = NULL;
+    }
 
     $form[self::FEDORA_URL] = [
       '#type' => 'textfield',
