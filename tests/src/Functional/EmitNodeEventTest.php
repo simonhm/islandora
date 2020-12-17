@@ -102,8 +102,8 @@ class EmitNodeEventTest extends IslandoraFunctionalTestBase {
           "Authorization header must be set"
         );
         $matches = [];
-        $this->assertTrue(
-          preg_match('/^Bearer (.*)/', $headers['Authorization'], $matches),
+        $this->assertTrue((boolean)
+          preg_match('/^Bearer(\s*.*)/', $headers['Authorization'], $matches),
           "Authorization header must be a bearer token"
         );
         $this->assertTrue(
