@@ -5,7 +5,6 @@ namespace Drupal\islandora\Plugin\Action;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
-use Drupal\islandora\EventGenerator\EmitEvent;
 
 /**
  * Emits a Node for generating derivatives event.
